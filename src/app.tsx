@@ -1,6 +1,6 @@
 import { h } from 'preact';
-import style from './app.module.css';
 import { useEffect, useState } from 'preact/hooks';
+import Event from './Event';
 
 const dates = [
     new Date('Feb 08 2023'),
@@ -85,50 +85,14 @@ const App = () => {
     debugger;
 
     return (
-        <div class={style.home}>
-            <h1>Upcoming 3636 Events</h1>
-            <div>
-                <h2>Wilsonville</h2>
-                <h3>
-                    Days until Wilsonville:{' '}
-                    {Math.floor(
-                        (WILSONVILLE.getTime() - Date.now()) /
-                            (1000 * 60 * 60 * 24)
-                    )}
-                </h3>
-                <h3>
-                    Meetings until Wilsonville:{' '}
-                    {dates.filter((date) => date < WILSONVILLE).length}
-                </h3>
-                <h3>
-                    {untilWilsonville[0]} days, {untilWilsonville[1]} hours,{' '}
-                    {untilWilsonville[2]} minutes, and {untilWilsonville[3]}{' '}
-                    seconds.
-                </h3>
-            </div>
-            <br></br>
-            <div>
-                <h2>Oregon State Fairgrounds</h2>
-                <h3>
-                    Days until Oregon State Fairgrounds:{' '}
-                    {Math.floor(
-                        (OREGON_FAIRGORUNDS.getTime() - Date.now()) /
-                            (1000 * 60 * 60 * 24)
-                    )}
-                </h3>
-                <h3>
-                    Meetings until Oregon State Fairgrounds:{' '}
-                    {dates.filter((date) => date < OREGON_FAIRGORUNDS).length}
-                </h3>
-                <h3>
-                    {untilOregonFairgrounds[0]} days,{' '}
-                    {untilOregonFairgrounds[1]} hours,{' '}
-                    {untilOregonFairgrounds[2]} minutes, and{' '}
-                    {untilOregonFairgrounds[3]} seconds.
-                </h3>
-            </div>
-
-            <h6>Zac made this btw</h6>
+        <div class="flex flex-col items-center justify-center h-full">
+            <h1 class="text-8xl mb-10">Upcoming 3636 Events</h1>
+            <Event date={WILSONVILLE} name="Wilsonville" allMeetings={dates} />
+            <Event
+                date={OREGON_FAIRGORUNDS}
+                name="Oregon Fairgrounds"
+                allMeetings={dates}
+            />
         </div>
     );
 };
