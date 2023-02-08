@@ -50,10 +50,10 @@ function daysUntil(date1: Date, date2: Date) {
     let DifferenceInDays = DifferenceInTime / (1000 * 3600 * 24);
 
     return [
-        DifferenceInDays,
-        DifferenceInHours,
-        DifferenceInMinutes,
-        DifferenceInSeconds
+        Math.ceil(DifferenceInDays),
+        Math.ceil(DifferenceInHours),
+        Math.ceil(DifferenceInMinutes),
+        Math.ceil(DifferenceInSeconds)
     ];
 }
 
@@ -91,7 +91,7 @@ const App = () => {
                 <h2>Wilsonville</h2>
                 <h3>
                     Days until Wilsonville:{' '}
-                    {Math.floor(
+                    {Math.ceil(
                         (WILSONVILLE.getTime() - Date.now()) /
                             (1000 * 60 * 60 * 24)
                     )}
@@ -111,7 +111,7 @@ const App = () => {
                 <h2>Oregon State Fairgrounds</h2>
                 <h3>
                     Days until Oregon State Fairgrounds:{' '}
-                    {Math.floor(
+                    {Math.ceil(
                         (OREGON_FAIRGORUNDS.getTime() - Date.now()) /
                             (1000 * 60 * 60 * 24)
                     )}
