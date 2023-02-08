@@ -64,6 +64,27 @@ const App = () => {
     let [untilOregonFairgrounds, setDaysUntilFairgrounds] = useState(
         daysUntil(new Date(), OREGON_FAIRGORUNDS)
     );
+    let [meetingsUntilWilsonville, setMeetingsUntilWilsonville] = useState(
+        dates.filter((date) => date < WILSONVILLE).length
+    );
+    let [meetingsUntilFairgrounds, setMeetingsUntilFairgrounds] = useState(
+        dates.filter((date) => date < OREGON_FAIRGORUNDS).length
+    );
+
+
+    useEffect(() => {
+        setInterval(
+            () => setMeetingsUntilWilsonville(dates.filter((date) => date < WILSONVILLE).length),
+            1000
+        );
+    }, []);
+
+    useEffect(() => {
+        setInterval(
+            () => setMeetingsUntilFairgrounds(dates.filter((date) => date < OREGON_FAIRGORUNDS).length),
+            1000
+        );
+    }, []);
 
     useEffect(() => {
         setInterval(
@@ -82,7 +103,6 @@ const App = () => {
         );
     }, []);
 
-    debugger;
 
     return (
         <div class={style.home}>
@@ -91,14 +111,11 @@ const App = () => {
                 <h2>Wilsonville</h2>
                 <h3>
                     Days until Wilsonville:{' '}
-                    {Math.ceil(
-                        (WILSONVILLE.getTime() - Date.now()) /
-                            (1000 * 60 * 60 * 24)
-                    )}
+                    {untilWilsonville[0]}
                 </h3>
                 <h3>
                     Meetings until Wilsonville:{' '}
-                    {dates.filter((date) => date < WILSONVILLE).length}
+                    {meetingsUntilWilsonville}
                 </h3>
                 <h3>
                     {untilWilsonville[0]} days, {untilWilsonville[1]} hours,{' '}
@@ -111,14 +128,11 @@ const App = () => {
                 <h2>Oregon State Fairgrounds</h2>
                 <h3>
                     Days until Oregon State Fairgrounds:{' '}
-                    {Math.ceil(
-                        (OREGON_FAIRGORUNDS.getTime() - Date.now()) /
-                            (1000 * 60 * 60 * 24)
-                    )}
+                    {untilOregonFairgrounds[0]}
                 </h3>
                 <h3>
                     Meetings until Oregon State Fairgrounds:{' '}
-                    {dates.filter((date) => date < OREGON_FAIRGORUNDS).length}
+                    {meetingsUntilFairgrounds}
                 </h3>
                 <h3>
                     {untilOregonFairgrounds[0]} days,{' '}
