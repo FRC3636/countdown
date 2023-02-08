@@ -49,10 +49,10 @@ function daysUntil(date1: Date, date2: Date) {
     let DifferenceInDays = DifferenceInTime / (1000 * 3600 * 24);
 
     return [
-        DifferenceInDays,
-        DifferenceInHours,
-        DifferenceInMinutes,
-        DifferenceInSeconds
+        Math.ceil(DifferenceInDays),
+        Math.ceil(DifferenceInHours),
+        Math.ceil(DifferenceInMinutes),
+        Math.ceil(DifferenceInSeconds)
     ];
 }
 
@@ -68,6 +68,7 @@ const App = () => {
                     allMeetings={dates}
                 />
             </div>
+
         </div>
     );
 };
