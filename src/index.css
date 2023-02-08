@@ -8,16 +8,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    color-scheme: light dark;
-    color: #444;
-    background: #fafafa;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        color: #fff;
-        background: #1c1c1c;
-    }
+    color-scheme: dark;
+    color: #fff;
+    background: #1c1c1c;
 }
 
 html,
