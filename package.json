@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "--openssl-legacy-provider preact build",
+    "build": "preact --openssl-legacy-provider  build",
     "serve": "sirv build --port 8080 --cors --single",
     "dev": "preact --openssl-legacy-provider watch",
     "lint": "eslint src"
