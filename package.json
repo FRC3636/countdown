@@ -4,11 +4,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "cross-env preact build",
+    "build": "--openssl-legacy-provider preact build",
     "serve": "sirv build --port 8080 --cors --single",
-    "dev": "cross-env preact watch",
-    "lint": "eslint src",
-    "test": "jest"
+    "dev": "preact --openssl-legacy-provider watch",
+    "lint": "eslint src"
   },
   "eslintConfig": {
     "extends": "preact",
