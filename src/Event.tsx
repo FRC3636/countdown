@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useState } from "preact/hooks";
 
 const DAYS = 1000 * 60 * 60 * 24;
 const HOURS = 1000 * 60 * 60;
@@ -10,24 +10,15 @@ export default function Event(props: {
     name: string;
     allMeetings: Date[];
 }) {
-    const meetingsUntil = props.allMeetings.filter(
-        (date) => date < props.date
-    ).length;
-
     return (
-        <div class="flex flex-col gap-4 border shadow-lg dark:shadow-none p-4 rounded-lg m-5">
+        <div class="flex flex-col gap-4 border p-4 rounded-lg m-5">
             <h2 class="text-4xl md:text-5xl mb-5 underline">{props.name}</h2>
-            <div class="flex flex-col gap-6 text-3xl md:text-4xl">
-                <UpcomingDate date={props.date} />
-                <h3>
-                    <span class="font-bold">{meetingsUntil}</span> meetings away
-                </h3>
-            </div>
+                <UpcomingDate date={props.date} allMeetings={props.allMeetings}/>
         </div>
     );
 }
 
-function UpcomingDate(props: { date: Date }) {
+function UpcomingDate(props: { date: Date; allMeetings: Date[] }) {
     const getDifference = () => props.date.getTime() - Date.now();
     const [difference, setDifference] = useState(getDifference());
 
@@ -44,14 +35,22 @@ function UpcomingDate(props: { date: Date }) {
     const hoursUntil = Math.floor((difference % DAYS) / HOURS);
     const minutesUntil = Math.floor((difference % HOURS) / MINUTES);
     const secondsUntil = Math.floor((difference % MINUTES) / SECONDS);
+    const meetingsUntil = props.allMeetings.filter(
+        (date) => date < props.date
+    ).length;
 
     return (
-        <h3 class="flex gap-4">
-            <span class="font-bold flex-shrink-0">T minus:</span>
-            <span>
-                {daysUntil} days, {hoursUntil} hours, {minutesUntil} minutes,
-                and {secondsUntil} seconds
-            </span>
-        </h3>
+        <div class="flex flex-col gap-6 text-3xl md:text-4xl">
+            <h3 class="flex gap-4">
+                <span class="font-bold flex-shrink-0">T minus:</span>
+                <span>
+                    {daysUntil} days, {hoursUntil} hours, {minutesUntil}{" "}
+                    minutes, and {secondsUntil} seconds
+                </span>
+            </h3>
+            <h3>
+                <span class="font-bold">{meetingsUntil}</span> meetings away
+            </h3>
+        </div>
     );
 }

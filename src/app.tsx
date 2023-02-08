@@ -39,23 +39,6 @@ const dates = [
 const OREGON_FAIRGORUNDS = new Date('Mar 23 2023');
 const WILSONVILLE = new Date('Mar 9 2023');
 
-// This was taken from Ben's app script
-// That's why it's so fucking bad lmfao
-function daysUntil(date1: Date, date2: Date) {
-    let DifferenceInTime = date2.getTime() - date1.getTime();
-    let DifferenceInSeconds = (DifferenceInTime / 1000) % 60;
-    let DifferenceInMinutes = (DifferenceInTime / (1000 * 60)) % 60;
-    let DifferenceInHours = (DifferenceInTime / (1000 * 3600)) % 24;
-    let DifferenceInDays = DifferenceInTime / (1000 * 3600 * 24);
-
-    return [
-        Math.ceil(DifferenceInDays),
-        Math.ceil(DifferenceInHours),
-        Math.ceil(DifferenceInMinutes),
-        Math.ceil(DifferenceInSeconds)
-    ];
-}
-
 const App = () => {
     return (
         <div class="flex flex-col items-center justify-center h-full py-20 mb-5">
