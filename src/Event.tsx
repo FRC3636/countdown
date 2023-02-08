@@ -16,8 +16,8 @@ export default function Event(props: {
 
     return (
         <div class="flex flex-col gap-4 border shadow-lg dark:shadow-none p-4 rounded-lg m-5">
-            <h2 class="text-5xl mb-5 underline">{props.name}</h2>
-            <div class="flex flex-col gap-6 text-4xl">
+            <h2 class="text-4xl md:text-5xl mb-5 underline">{props.name}</h2>
+            <div class="flex flex-col gap-6 text-3xl md:text-4xl">
                 <UpcomingDate date={props.date} />
                 <h3>
                     <span class="font-bold">{meetingsUntil}</span> meetings away
@@ -27,12 +27,15 @@ export default function Event(props: {
     );
 }
 
-function UpcomingDate(props: { date: Date; }) {
+function UpcomingDate(props: { date: Date }) {
     const getDifference = () => props.date.getTime() - Date.now();
     const [difference, setDifference] = useState(getDifference());
 
     useEffect(() => {
-        const clock = setInterval(() => setDifference(getDifference()), SECONDS);
+        const clock = setInterval(
+            () => setDifference(getDifference()),
+            SECONDS
+        );
         return () => clearInterval(clock);
     }, []);
 
