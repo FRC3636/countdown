@@ -85,14 +85,17 @@ const App = () => {
     debugger;
 
     return (
-        <div class="flex flex-col items-center justify-center h-full">
-            <h1 class="text-8xl mb-10">Upcoming 3636 Events</h1>
-            <Event date={WILSONVILLE} name="Wilsonville" allMeetings={dates} />
-            <Event
-                date={OREGON_FAIRGORUNDS}
-                name="Oregon Fairgrounds"
-                allMeetings={dates}
-            />
+        <div class="flex flex-col items-center justify-center h-full py-20">
+            <h1 class="text-8xl my-10">Upcoming 3636 Events</h1>
+            <div class="flex h-full">
+
+                <Event date={WILSONVILLE} name="Wilsonville" allMeetings={dates} />
+                <Event
+                    date={OREGON_FAIRGORUNDS}
+                    name="Oregon Fairgrounds"
+                    allMeetings={dates}
+                />
+            </div>
         </div>
     );
 };

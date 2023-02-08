@@ -21,8 +21,8 @@ export default function Event(props: {
     const secondsUntil = Math.floor((difference % MINUTES) / SECONDS);
 
     return (
-        <div class="flex flex-col gap-4 border shadow-lg dark:shadow-none p-4 rounded-lg my-5">
-            <h2 class="text-4xl mb-3">{props.name}</h2>
+        <div class="flex flex-col gap-4 border shadow-lg dark:shadow-none p-4 rounded-lg m-5">
+            <h2 class="text-3xl mb-3 font-bold">{props.name}</h2>
             <div class="flex flex-col gap-2 text-xl">
                 <UpcomingDate date={props.date} />
                 <h3 class="text-2xl">
@@ -44,7 +44,7 @@ function UpcomingDate(props: { date: Date }) {
 
     return (
         <div class="flex gap-4">
-            <h3 class="text-2xl font-bold">T minus:</h3>
+            <h3 class="text-2xl font-bold flex-shrink-0">T minus:</h3>
             <h3 class="text-2xl">
                 {daysUntil} days, {hoursUntil} hours, {minutesUntil} minutes,
                 and {secondsUntil} seconds
