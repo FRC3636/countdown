@@ -57,37 +57,10 @@ function daysUntil(date1: Date, date2: Date) {
 }
 
 const App = () => {
-    let [untilWilsonville, setDaysUntilWilsonville] = useState(
-        daysUntil(new Date(), WILSONVILLE)
-    );
-    let [untilOregonFairgrounds, setDaysUntilFairgrounds] = useState(
-        daysUntil(new Date(), OREGON_FAIRGORUNDS)
-    );
-
-    useEffect(() => {
-        setInterval(
-            () => setDaysUntilWilsonville(daysUntil(new Date(), WILSONVILLE)),
-            1000
-        );
-    }, []);
-
-    useEffect(() => {
-        setInterval(
-            () =>
-                setDaysUntilFairgrounds(
-                    daysUntil(new Date(), OREGON_FAIRGORUNDS)
-                ),
-            1000
-        );
-    }, []);
-
-    debugger;
-
     return (
         <div class="flex flex-col items-center justify-center h-full py-20">
             <h1 class="text-8xl my-10">Upcoming 3636 Events</h1>
             <div class="flex h-full">
-
                 <Event date={WILSONVILLE} name="Wilsonville" allMeetings={dates} />
                 <Event
                     date={OREGON_FAIRGORUNDS}
