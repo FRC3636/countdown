@@ -141,8 +141,6 @@ const App = () => {
                     {untilOregonFairgrounds[3]} seconds.
                 </h3>
             </div>
-
-            <h6>Zac made this btw</h6>
         </div>
     );
 };
