@@ -9,9 +9,12 @@
         "dev": "vite dev"
     },
     "devDependencies": {
-        "@preact/preset-vite": "^2.5.0",
-        "typescript": "^4.9.3",
         "@babel/core": "^7.20.12",
+        "@preact/preset-vite": "^2.5.0",
+        "autoprefixer": "^10.4.13",
+        "postcss": "^8.4.21",
+        "tailwindcss": "^3.2.4",
+        "typescript": "^4.9.3",
         "vite": "^4.1.0"
     },
     "dependencies": {

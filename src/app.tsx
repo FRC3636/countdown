@@ -1,6 +1,5 @@
-import { h } from 'preact';
-import style from './app.module.css';
 import { useEffect, useState } from 'preact/hooks';
+import Event from './Event';
 
 const dates = [
     new Date('Feb 08 2023'),
@@ -40,106 +39,23 @@ const dates = [
 const OREGON_FAIRGORUNDS = new Date('Mar 23 2023');
 const WILSONVILLE = new Date('Mar 9 2023');
 
-// This was taken from Ben's app script
-// That's why it's so fucking bad lmfao
-function daysUntil(date1: Date, date2: Date) {
-    let DifferenceInTime = date2.getTime() - date1.getTime();
-    let DifferenceInSeconds = (DifferenceInTime / 1000) % 60;
-    let DifferenceInMinutes = (DifferenceInTime / (1000 * 60)) % 60;
-    let DifferenceInHours = (DifferenceInTime / (1000 * 3600)) % 24;
-    let DifferenceInDays = DifferenceInTime / (1000 * 3600 * 24);
-
-    return [
-        Math.ceil(DifferenceInDays),
-        Math.ceil(DifferenceInHours),
-        Math.ceil(DifferenceInMinutes),
-        Math.ceil(DifferenceInSeconds)
-    ];
-}
-
 const App = () => {
-    let [untilWilsonville, setDaysUntilWilsonville] = useState(
-        daysUntil(new Date(), WILSONVILLE)
-    );
-    let [untilOregonFairgrounds, setDaysUntilFairgrounds] = useState(
-        daysUntil(new Date(), OREGON_FAIRGORUNDS)
-    );
-    let [meetingsUntilWilsonville, setMeetingsUntilWilsonville] = useState(
-        dates.filter((date) => date < WILSONVILLE).length
-    );
-    let [meetingsUntilFairgrounds, setMeetingsUntilFairgrounds] = useState(
-        dates.filter((date) => date < OREGON_FAIRGORUNDS).length
-    );
-
-
-    useEffect(() => {
-        setInterval(
-            () => setMeetingsUntilWilsonville(dates.filter((date) => date < WILSONVILLE).length),
-            1000
-        );
-    }, []);
-
-    useEffect(() => {
-        setInterval(
-            () => setMeetingsUntilFairgrounds(dates.filter((date) => date < OREGON_FAIRGORUNDS).length),
-            1000
-        );
-    }, []);
-
-    useEffect(() => {
-        setInterval(
-            () => setDaysUntilWilsonville(daysUntil(new Date(), WILSONVILLE)),
-            1000
-        );
-    }, []);
-
-    useEffect(() => {
-        setInterval(
-            () =>
-                setDaysUntilFairgrounds(
-                    daysUntil(new Date(), OREGON_FAIRGORUNDS)
-                ),
-            1000
-        );
-    }, []);
-
-
     return (
-        <div class={style.home}>
-            <h1>Upcoming 3636 Events</h1>
-            <div>
-                <h2>Wilsonville</h2>
-                <h3>
-                    Days until Wilsonville:{' '}
-                    {untilWilsonville[0]}
-                </h3>
-                <h3>
-                    Meetings until Wilsonville:{' '}
-                    {meetingsUntilWilsonville}
-                </h3>
-                <h3>
-                    {untilWilsonville[0]} days, {untilWilsonville[1]} hours,{' '}
-                    {untilWilsonville[2]} minutes, and {untilWilsonville[3]}{' '}
-                    seconds.
-                </h3>
-            </div>
-            <br></br>
-            <div>
-                <h2>Oregon State Fairgrounds</h2>
-                <h3>
-                    Days until Oregon State Fairgrounds:{' '}
-                    {untilOregonFairgrounds[0]}
-                </h3>
-                <h3>
-                    Meetings until Oregon State Fairgrounds:{' '}
-                    {meetingsUntilFairgrounds}
-                </h3>
-                <h3>
-                    {untilOregonFairgrounds[0]} days,{' '}
-                    {untilOregonFairgrounds[1]} hours,{' '}
-                    {untilOregonFairgrounds[2]} minutes, and{' '}
-                    {untilOregonFairgrounds[3]} seconds.
-                </h3>
+        <div class="flex flex-col items-center justify-center h-full py-20 mb-5">
+            <h1 class="text-4xl font-bold md:text-5xl md:font-normal lg:text-8xl my-10">
+                Upcoming 3636 Events
+            </h1>
+            <div class="flex flex-col lg:flex-row h-full">
+                <Event
+                    date={WILSONVILLE}
+                    name="Wilsonville"
+                    allMeetings={dates}
+                />
+                <Event
+                    date={OREGON_FAIRGORUNDS}
+                    name="Oregon Fairgrounds"
+                    allMeetings={dates}
+                />
             </div>
         </div>
     );
