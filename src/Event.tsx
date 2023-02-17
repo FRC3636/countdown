@@ -36,7 +36,7 @@ function UpcomingDate(props: { date: Date; allMeetings: Date[] }) {
     const minutesUntil = Math.floor((difference % HOURS) / MINUTES);
     const secondsUntil = Math.floor((difference % MINUTES) / SECONDS);
     const meetingsUntil = props.allMeetings.filter(
-        (date) => date < props.date
+        (meeting) => meeting.getTime() > Date.now() && meeting.getTime() < props.date.getTime()
     ).length;
 
     return (
