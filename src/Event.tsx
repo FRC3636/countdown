@@ -25,7 +25,7 @@ interface CalendarItem {
 }
 
 async function getMeetingsUntil(): Promise<FunctionComponent<{ event: Date }>> {
-    const filterDate = new Date(Date.now()).toISOString();
+    const filterDate = new Date().toISOString();
     let res = await fetch(
         `https://www.googleapis.com/calendar/v3/calendars/ghsrobotics3636@gmail.com/events?showDeleted=false&maxResults=2500&orderBy=updated&timeMin=${filterDate}`,
         {
@@ -44,7 +44,7 @@ async function getMeetingsUntil(): Promise<FunctionComponent<{ event: Date }>> {
             // the showDeleted parameter filters out most of the cancelled events
             // but not all of them. it filters out about
             // 7 kib worth of data and then just gives up on two events
-            if (item.status == 'cancelled') continue;
+            if (item.status === 'cancelled') continue;
 
             // we should ignore non-meetings (e.g. events, etc)
             // e.g. "Robotics Meeting" -> "robotics meeting" -> contains "meeting"
