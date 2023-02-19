@@ -35,7 +35,6 @@ async function getMeetingsUntil(): Promise<FunctionComponent<{ event: Date }>> {
         }
     );
     let data = (await res.json()) as { items: CalendarItem[] };
-    console.log(JSON.stringify(data, null, 4));
 
     return ({ event }) => {
         let finalMeetings = 0;
@@ -53,14 +52,12 @@ async function getMeetingsUntil(): Promise<FunctionComponent<{ event: Date }>> {
             if (!item.start.dateTime) continue;
             const meetingTime = new Date(item.start.dateTime).getTime();
             const currentTime = Date.now();
-            console.log('made it here 1');
             // if the event is before the date
             const eventDate = event.getTime();
             if (meetingTime < eventDate && meetingTime > currentTime) {
                 console.log(new Date(item.start.dateTime));
                 finalMeetings++;
             }
-            console.log('made it here 2');
         }
 
         return <>{finalMeetings}</>;
