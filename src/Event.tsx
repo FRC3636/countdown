@@ -27,7 +27,7 @@ interface CalendarItem {
 async function getMeetingsUntil(): Promise<FunctionComponent<{ event: Date }>> {
     const filterDate = new Date().toISOString();
     let res = await fetch(
-        `https://www.googleapis.com/calendar/v3/calendars/ghsrobotics3636@gmail.com/events?showDeleted=false&maxResults=2500&orderBy=updated&timeMin=${filterDate}`,
+        `https://www.googleapis.com/calendar/v3/calendars/ghsrobotics3636@gmail.com/events?showDeleted=false&maxResults=9999&orderBy=updated&timeMin=${filterDate}&singleEvents=true`,
         {
             headers: {
                 'X-goog-api-key': 'AIzaSyDez4WTShYYZJfCQ3zMJYr-Vp9KGFk-fcI'
