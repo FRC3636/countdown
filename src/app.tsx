@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'preact/hooks';
 import Event from './Event';
 
 export const OREGON_FAIRGORUNDS = new Date('Mar 23 2023');

@@ -18,69 +18,75 @@ export default function Event(props: {
 }
 
 
-function MeetingsUntil(date: Date) {
-    let finalMeetings = 0;
-    const filterDate = new Date(Date.now()).toISOString();
-    fetch(`https://www.googleapis.com/calendar/v3/calendars/ghsrobotics3636%40gmail.com/events?timeMax=${filterDate}&showDeleted=false`, {
-        headers: {
-            "X-goog-api-key": "AIzaSyDez4WTShYYZJfCQ3zMJYr-Vp9KGFk-fcI",
-        },
-    })
-        .then((response: { json: () => any; }) => response.json())
-        .then((data: any) => {
-            // loop through all events
-            for (let i = 0; i < data.items.length; i++) {
-                // the showDeleted parameter filters out most of the cancelled events
-                // but not all of them. it filters out about
-                // 7 kib worth of data and then just gives up on two events
-                // wtf google
-                if (data.items[i].status == "cancelled")
-                    continue;
-                // if the event is a meeting
-                if (data.items[i].summary == "Robotics Meeting") {
-                    // if the event is before the date
-                    if (new Date(data.items[i].start.dateTime) < date) {
-                        // add one to the final meetings
-                        finalMeetings++;
-                    }
-                    
-                }
-            }
-            
-        }
-    );
-    return finalMeetings;
-}
-
-// async function MeetingsUntil(date: Date) {
+// function MeetingsUntil(date: Date) {
 //     let finalMeetings = 0;
 //     const filterDate = new Date(Date.now()).toISOString();
-//     let res = await fetch(`https://www.googleapis.com/calendar/v3/calendars/ghsrobotics3636%40gmail.com/events?timeMax=${filterDate}&showDeleted=false`, {
+//     fetch(`https://www.googleapis.com/calendar/v3/calendars/ghsrobotics3636%40gmail.com/events?timeMax=${filterDate}&showDeleted=false`, {
 //         headers: {
 //             "X-goog-api-key": "AIzaSyDez4WTShYYZJfCQ3zMJYr-Vp9KGFk-fcI",
 //         },
 //     })
-//     let data = await res.json();
-//     // loop through all events
-//     for (let i = 0; i < data.items.length; i++) {
-//         // the showDeleted parameter filters out most of the cancelled events
-//         // but not all of them. it filters out about
-//         // 7 kib worth of data and then just gives up on two events
-//         // wtf google
-//         if (data.items[i].status == "cancelled")
-//             continue;
-//         // if the event is a meeting
-//         if (data.items[i].summary == "Robotics Meeting") {
-//             // if the event is before the date
-//             if (new Date(data.items[i].start.dateTime) < date) {
-//                 // add one to the final meetings
-//                 finalMeetings++;
+//         .then((response: { json: () => any; }) => response.json())
+//         .then((data: any) => {
+//             // loop through all events
+//             for (let i = 0; i < data.items.length; i++) {
+//                 // the showDeleted parameter filters out most of the cancelled events
+//                 // but not all of them. it filters out about
+//                 // 7 kib worth of data and then just gives up on two events
+//                 // wtf google
+//                 if (data.items[i].status == "cancelled")
+//                     continue;
+//                 // if the event is a meeting
+//                 if (data.items[i].summary == "Robotics Meeting") {
+//                     // if the event is before the date
+//                     if (new Date(data.items[i].start.dateTime) < date) {
+//                         // add one to the final meetings
+//                         finalMeetings++;
+//                     }
+                    
+//                 }
 //             }
             
 //         }
-//     }
+//     );
 //     return finalMeetings;
 // }
+
+async function MeetingsUntil(date: Date) {
+    let finalMeetings = 0;
+    const filterDate = new Date(Date.now()).toISOString();
+    let res = await fetch(`https://www.googleapis.com/calendar/v3/calendars/ghsrobotics3636@gmail.com/events?showDeleted=false&maxResults=2500&orderBy=updated&timeMin=${filterDate}`, {
+        headers: {
+            "X-goog-api-key": "AIzaSyDez4WTShYYZJfCQ3zMJYr-Vp9KGFk-fcI",
+        },
+    })
+    let data = await res.json();
+    // loop through all events
+    for (let i = 0; i < data.items.length; i++) {
+        // the showDeleted parameter filters out most of the cancelled events
+        // but not all of them. it filters out about
+        // 7 kib worth of data and then just gives up on two events
+    
+        if (data.items[i].status == "cancelled")
+            continue;
+        // if the event is a meeting
+        if (data.items[i].summary.toLowerCase().includes("meeting")) {
+            if(data.items[i].start.dateTime == undefined)
+                continue;
+            const meetingTime = new Date(data.items[i].start.dateTime).getTime();
+            const currentTime = Date.now();
+            console.log("made it here 1")
+            // if the event is before the date
+            const eventDate = date.getTime();
+            if (meetingTime < eventDate && meetingTime > currentTime) {
+                console.log(new Date(data.items[i].start.dateTime));
+                finalMeetings++;
+            }
+            console.log("made it here 2");
+        }
+    }
+    return finalMeetings;
+}
 
 
 function UpcomingDate(props: { date: Date; }) {
@@ -95,6 +101,14 @@ function UpcomingDate(props: { date: Date; }) {
         return () => clearInterval(clock);
     }, []);
 
+    const [meetingsUntil, setMeetingsUntil] = useState(0);
+    useEffect(() => {
+        MeetingsUntil(props.date).then((meetings: number) => {
+            setMeetingsUntil(meetings);
+        });
+    });
+
+
 
     // each variable does not include the last, so e.g. hours is always under 24
     const daysUntil = Math.floor(difference / DAYS);
@@ -102,10 +116,6 @@ function UpcomingDate(props: { date: Date; }) {
     const minutesUntil = Math.floor((difference % HOURS) / MINUTES);
     const secondsUntil = Math.floor((difference % MINUTES) / SECONDS);
     
-    const meetingsUntil = MeetingsUntil(props.date);
-
-    console.log(meetingsUntil);
-
     return (
         <div class="flex flex-col gap-6 text-3xl md:text-4xl">
             <h3 class="flex gap-4">
