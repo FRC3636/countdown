@@ -55,7 +55,6 @@ async function getMeetingsUntil(): Promise<FunctionComponent<{ event: Date }>> {
             // if the event is before the date
             const eventDate = event.getTime();
             if (meetingTime < eventDate && meetingTime > currentTime) {
-                console.log(new Date(item.start.dateTime));
                 finalMeetings++;
             }
         }
