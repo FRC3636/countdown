@@ -67,7 +67,7 @@ export function useInterval(
 const App = () => {
     const [calItems, setCalItems] = useState<any>(null);
     // refetch data every hour to keep up-to-date without reloads
-    useInterval(() => getCalandarItems().then(setCalItems), HOURS * 1, true);
+    useInterval(() => getCalandarItems().then(setCalItems), SECONDS * 30, true);
 
     const events = calItems ? getEvents(calItems) : null;
 
