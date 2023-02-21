@@ -31,8 +31,7 @@ function getEvents(data: Record<string, any>): Record<string, any> {
 
         if (!item.summary.toLowerCase().includes('event')) continue;
 
-        if (!item.start.dateTime) continue;
-        const eventTime = new Date(item.start.dateTime).getTime();
+        const eventTime = new Date(item.start.dateTime ?? item.start.date).getTime();
         const currentTime = Date.now();
         if (eventTime > currentTime) {
             //@ts-ignore
@@ -84,7 +83,7 @@ const App = () => {
                         <Event
                             name={event.summary}
                             date={
-                                new Date(event.start.dateTime ?? '1970-01-01')
+                                new Date(event.start.dateTime ?? event.start.date)
                             }
                             calItems={calItems}
                         />
