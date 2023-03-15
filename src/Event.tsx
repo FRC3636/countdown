@@ -15,29 +15,32 @@ export default function Event(props: {
 }
 
 function getMeetingsUntil(date: Date, data: Record<string, any>) {
-    let finalMeetings = 0;
+    const meetingDays = new Set<string>();
     // loop through all events
-    for (let i = 0; i < data.items.length; i++) {
+    for (const item of data.items) {
         // the showDeleted parameter filters out most of the cancelled events
         // but not all of them. it filters out about
         // 7 kib worth of data and then just gives up on two events
+        if (item.status == 'cancelled') continue;
 
-        if (data.items[i].status == 'cancelled') continue;
         // if the event is a meeting
-        if (data.items[i].summary.toLowerCase().includes('meeting')) {
-            if (data.items[i].start.dateTime == undefined) continue;
-            const meetingTime = new Date(
-                data.items[i].start.dateTime
-            ).getTime();
+        if (item.summary.toLowerCase().includes('meeting')) {
+            if (item.start.dateTime == undefined) continue;
+            const meetingDate = new Date(item.start.dateTime);
+            const meetingTimestamp = meetingDate.getTime();
             const currentTime = Date.now();
             // if the event is before the date
-            const eventDate = date.getTime();
-            if (meetingTime < eventDate && meetingTime > currentTime) {
-                finalMeetings++;
+            const eventTimestamp = date.getTime();
+            if (
+                meetingTimestamp < eventTimestamp &&
+                meetingTimestamp > currentTime
+            ) {
+                // drops the time, only has the day. the set will remove duplicates automatically.
+                meetingDays.add(meetingDate.toDateString());
             }
         }
     }
-    return finalMeetings;
+    return meetingDays.size;
 }
 
 function UpcomingDate(props: { date: Date; calItems: Record<string, any> }) {
