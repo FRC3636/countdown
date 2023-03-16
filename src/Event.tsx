@@ -72,7 +72,7 @@ function UpcomingDate(props: { date: Date; calItems: Record<string, any> }) {
     return (
         <>
             <h2 class="flex gap-4 text-4xl md:text-5xl mb-5">
-                {dateFormatter.format(props.date)}
+                {dateFormatter.format(props.date.getTime() + DAYS)}
             </h2>
             <div class="flex flex-col gap-6 text-3xl md:text-4xl">
                 <h3 class="flex gap-4">

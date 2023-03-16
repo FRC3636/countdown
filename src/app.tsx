@@ -43,9 +43,12 @@ function getEvents(data: Record<string, any>): IEvent[] {
         // 7 kib worth of data and then just gives up on two events
         if (item.status === 'cancelled') continue;
 
-        const eventTime = new Date(
-            item.start.dateTime ?? item.start.date
-        ).getTime();
+        // what the heck??
+        const EVENT_OFFSET = -14 * HOURS;
+
+        const eventTime =
+            new Date(item.start.dateTime ?? item.start.date).getTime() +
+            EVENT_OFFSET;
 
         const currentTime = Date.now();
         if (eventTime > currentTime) {
