@@ -20,26 +20,44 @@ async function getCalandarItems(): Promise<Record<string, any>> {
     return await res.json();
 }
 
-function getEvents(data: Record<string, any>): Record<string, any> {
-    let events = {};
+interface IEvent {
+    name: string;
+    timestamp: number;
+    location?: string;
+}
 
-    for (const item of data.items) {
+function getEvents(data: Record<string, any>): IEvent[] {
+    let events: IEvent[] = [];
+
+    function isEvent(item: any) {
+        const patterns = [/event/i, /^dcmp/i];
+        for (const pattern of patterns) {
+            if (pattern.test(item.summary)) return true;
+        }
+        return false;
+    }
+
+    for (const item of data.items.filter(isEvent)) {
         // the showDeleted parameter filters out most of the cancelled events
         // but not all of them. it filters out about
         // 7 kib worth of data and then just gives up on two events
         if (item.status === 'cancelled') continue;
 
-        if (!item.summary.toLowerCase().includes('event')) continue;
+        const eventTime = new Date(
+            item.start.dateTime ?? item.start.date
+        ).getTime();
 
-        const eventTime = new Date(item.start.dateTime ?? item.start.date).getTime();
         const currentTime = Date.now();
         if (eventTime > currentTime) {
-            //@ts-ignore
-            events[item.summary] = item;
+            events.push({
+                name: item.summary,
+                timestamp: eventTime,
+                location: item.location
+            });
         }
     }
 
-    return events;
+    return events.sort((a, b) => a.timestamp - b.timestamp);
 }
 
 /**
@@ -79,12 +97,11 @@ const App = () => {
                 {events === null ? (
                     <div>Loading...</div>
                 ) : (
-                    Object.values(events).map((event: any) => (
+                    events.map((event) => (
                         <Event
-                            name={event.summary}
-                            date={
-                                new Date(event.start.dateTime ?? event.start.date)
-                            }
+                            name={event.name}
+                            location={event.location}
+                            date={new Date(event.timestamp)}
                             calItems={calItems}
                         />
                     ))
