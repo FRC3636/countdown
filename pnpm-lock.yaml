@@ -1,17 +1,23 @@
 lockfileVersion: 5.4
 
+overrides:
+  react: ^10.11.3
+  react-dom: ^10.11.3
+
 specifiers:
   '@babel/core': ^7.20.12
   '@preact/preset-vite': ^2.5.0
   autoprefixer: ^10.4.13
   postcss: ^8.4.21
   preact: ^10.11.3
+  react-dvd-screensaver: ^0.0.5
   tailwindcss: ^3.2.4
   typescript: ^4.9.3
   vite: ^4.1.0
 
 dependencies:
   preact: 10.12.0
+  react-dvd-screensaver: 0.0.5
 
 devDependencies:
   '@babel/core': 7.20.12
@@ -1097,6 +1103,13 @@ packages:
     resolution: {integrity: sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==}
     engines: {node: '>=10'}
     dev: true
+
+  /react-dvd-screensaver/0.0.5:
+    resolution: {integrity: sha512-oUG6KyOILUyM/biOxA4lAXP4epNcbcIhGf6PlXPUIiGnHGfv6CLzxRLEnVh6aik+c4oxRZl8GPASWkzWDSNuTA==}
+    peerDependencies:
+      react: ^16.3 || ^17.0 || ^18.0
+      react-dom: ^16.3 || ^17.0 || ^18.0
+    dev: false
 
   /read-cache/1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}

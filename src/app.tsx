@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from 'preact/compat';
+import DVDLogo from './DVDLogo';
 import Event from './Event';
 
 export const DAYS = 1000 * 60 * 60 * 24;
@@ -89,25 +90,28 @@ const App = () => {
     const events = calItems ? getEvents(calItems) : null;
 
     return (
-        <div class="flex flex-col items-center justify-center h-full py-20 mb-5">
-            <h1 class="text-4xl font-bold md:text-5xl md:font-normal lg:text-8xl my-10">
-                Upcoming 3636 Events
-            </h1>
-            <div class="flex flex-col lg:flex-row h-full">
-                {events === null ? (
-                    <div>Loading...</div>
-                ) : (
-                    events.map((event) => (
-                        <Event
-                            name={event.name}
-                            location={event.location}
-                            date={new Date(event.timestamp)}
-                            calItems={calItems}
-                        />
-                    ))
-                )}
+        <>
+            <DVDLogo />
+            <div class="flex flex-col items-center justify-center h-full py-20 mb-5">
+                <h1 class="text-4xl font-bold md:text-5xl md:font-normal lg:text-8xl my-10">
+                    Upcoming 3636 Events
+                </h1>
+                <div class="flex flex-col lg:flex-row h-full">
+                    {events === null ? (
+                        <div>Loading...</div>
+                    ) : (
+                        events.map((event) => (
+                            <Event
+                                name={event.name}
+                                location={event.location}
+                                date={new Date(event.timestamp)}
+                                calItems={calItems}
+                            />
+                        ))
+                    )}
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
