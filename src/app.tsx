@@ -31,7 +31,7 @@ function getEvents(data: Record<string, any>): IEvent[] {
     let events: IEvent[] = [];
 
     function isEvent(item: any) {
-        const patterns = [/event/i, /^dcmp/i];
+        const patterns = [/event/i, /^dcmp/i, /outreach/i];
         for (const pattern of patterns) {
             if (pattern.test(item.summary)) return true;
         }
